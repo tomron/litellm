@@ -212,6 +212,8 @@ def test_commit_msg_uses_first_non_comment_line(tmp_path):
         "release/v1.45.0",
         "chore/bump-deps",
         "feature/nested/path/ok",  # nested slashes after type are fine
+        "litellm_fix_streaming_chunks",
+        "litellm_pre_push.allow-1",
     ],
 )
 def test_pre_push_accepts_conventional_branches(branch):
@@ -226,7 +228,8 @@ def test_pre_push_accepts_conventional_branches(branch):
     "branch",
     [
         "random-branch-name",
-        "litellm_fix/optimize-streaming",  # legacy pattern is now rejected
+        "litellm_fix/optimize-streaming",  # slash after litellm_ prefix is rejected
+        "litellm_",                        # empty description
         "ui/navbar-notifications",         # not in the allow list
         "feature/",                        # empty description
         "Feature/foo",                     # type is case-sensitive

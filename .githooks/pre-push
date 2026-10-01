@@ -5,6 +5,7 @@
 #
 # Branch format:  <type>/<description>
 #   <type> must be one of: feature, bugfix, hotfix, release, chore
+# or:             litellm_<description>  (no slash)
 #
 # Protected branches (always allowed):
 #   - main
@@ -20,7 +21,7 @@ set -eu
 ZERO_OID="0000000000000000000000000000000000000000"
 ZERO_OID_SHA256="0000000000000000000000000000000000000000000000000000000000000000"
 ALLOWED_TYPES="feature|bugfix|hotfix|release|chore"
-BRANCH_PATTERN="^(${ALLOWED_TYPES})/.+"
+BRANCH_PATTERN="^((${ALLOWED_TYPES})/.+|litellm_[A-Za-z0-9._-]+)$"
 
 PROTECTED_NAMES="main litellm_internal_staging"
 PROTECTED_PREFIXES="dependabot/ gh-readonly-queue/"
@@ -69,7 +70,7 @@ if [ -n "$invalid" ]; then
 
   Invalid:$invalid
 
-  Expected: <type>/<description>
+  Expected: <type>/<description> or litellm_<description>
 
   Allowed types: feature, bugfix, hotfix, release, chore
   Examples:
@@ -77,6 +78,7 @@ if [ -n "$invalid" ]; then
     bugfix/streaming-empty-chunks
     chore/bump-deps
     hotfix/auth-bypass
+    litellm_fix_streaming_chunks
 
   Protected (always allowed): main, litellm_internal_staging,
   dependabot/*, gh-readonly-queue/*.
